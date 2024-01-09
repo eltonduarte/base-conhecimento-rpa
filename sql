@@ -50,3 +50,6 @@ IIF(ISNULL([Deposito]) = False, [Deposito], '') AS 'Deposito',
 FROM [$vListaAbas[0]$$$] 
 WHERE LEN([Asset ID]) > 0 
 
+
+SELECT `Materiais Óleo` FROM [Parâmetros$$] WHERE [Materiais Óleo] IS NOT NULL or [Materiais Óleo] <> ""
+

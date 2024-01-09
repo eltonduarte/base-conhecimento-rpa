@@ -1,0 +1,5 @@
+# Matar um processo
+Ação: Application: Open program/file Parâmetros: taskkill.exe, /f /im CHROME.exe
+
+# Abrir navegador no modo anonimo  
+Ação: Application: Open program/file Parâmetros: chrome.exe, $iStrEnderecoSite$ -incognito

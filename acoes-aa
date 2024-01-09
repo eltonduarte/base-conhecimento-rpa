@@ -7,3 +7,5 @@ Ação: Application: Open program/file Parâmetros: chrome.exe, $iStrEnderecoSit
 # Datetime: To string, formatos 
 dd_MM_yyyy
 
+# timestamp para log
+yyyy-MM-dd-HH-mm-ss

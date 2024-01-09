@@ -3,3 +3,7 @@ Ação: Application: Open program/file Parâmetros: taskkill.exe, /f /im CHROME.
 
 # Abrir navegador no modo anonimo  
 Ação: Application: Open program/file Parâmetros: chrome.exe, $iStrEnderecoSite$ -incognito
+
+# Datetime: To string, formatos 
+dd_MM_yyyy
+

@@ -1,0 +1,93 @@
+# Login no SAP
+
+SAPECC_ADM_Login
+Application: Open program/file, $@ConfSapguiPath$
+SAP: Connect:
+  Session name: Default
+  Select connection type: SAP GUI
+  Name: Nome do ambiente
+  Cliente: Mandante
+  Usuario/Senha
+  Idioma
+
+## Sair do SAP
+/NEX
+
+VBS: Verificar se a Pop-up de Troca de Senha Existe
+Function VerificarPopUpSenha()
+
+If Not IsObject(application) Then
+   Set SapGuiAuto  = GetObject("SAPGUI")
+   Set application = SapGuiAuto.GetScriptingEngine
+End If
+If Not IsObject(connection) Then
+   Set connection = application.Children(0)
+End If
+If Not IsObject(session) Then
+   Set session    = connection.Children(0)
+End If
+If IsObject(WScript) Then
+   WScript.ConnectObject session,     "on"
+   WScript.ConnectObject application, "on"
+End If
+
+If Not session.findById("/app/con[0]/ses[0]/wnd[1]/usr/pwdRSYST-NCODE", False) Is Nothing Then
+        VerificarPopUpSenha = true
+    else:
+        VerificarPopUpSenha = false
+End If
+End Function
+
+
+## 
+# lidar com outros pop-ups
+
+Function PegarNomePopUpSAP()
+
+If Not IsObject(application) Then
+   Set SapGuiAuto  = GetObject("SAPGUI")
+   Set application = SapGuiAuto.GetScriptingEngine
+End If
+If Not IsObject(connection) Then
+   Set connection = application.Children(0)
+End If
+If Not IsObject(session) Then
+   Set session    = connection.Children(0)
+End If
+If IsObject(WScript) Then
+   WScript.ConnectObject session,     "on"
+   WScript.ConnectObject application, "on"
+End If
+
+  If session.activeWindow.type = "GuiModalWindow" Then
+	PegarNomePopUpSAP = session.findById("wnd[1]").text
+End If
+
+End Function
+
+## Fechar Pop-up (Método "Close" SAP Script)
+If Not IsObject(application) Then
+   Set SapGuiAuto  = GetObject("SAPGUI")
+   Set application = SapGuiAuto.GetScriptingEngine
+End If
+If Not IsObject(connection) Then
+   Set connection = application.Children(0)
+End If
+If Not IsObject(session) Then
+   Set session    = connection.Children(0)
+End If
+If IsObject(WScript) Then
+   WScript.ConnectObject session,     "on"
+   WScript.ConnectObject application, "on"
+End If
+
+session.findById("wnd[1]").close
+
+
+##
+
+Function GetUserName()
+
+GetUserName = CreateObject("WScript.Network").UserName
+
+End Function

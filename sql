@@ -24,3 +24,29 @@ WHERE LEN([Imobilizado]) > 0 AND LEN([Pasta_Controle_Imobiliario]) = 6
 Select * 
 From [Base$$]
 Where [Imobilizado] Like '$iStrImobilizado$' and [Status] IN('Pendente', 'Falha') 
+
+
+Select 
+[Asset ID]
+From [$vListaAbas[1]$$$] 
+Where
+Len([Asset ID]) > 0
+
+Select Top 1 * From [$vListaAbas[3]$$$]
+  
+# FIN_BND_01
+SELECT
+IIF(ISNUll([Data de pagamento]) = False, Replace([Data de pagamento], '/', '.'),'') AS 'Data de pagamento', 
+IIF(ISNULL([Data de compra]) = False, Replace([Data de compra], '/', '.'),'') AS 'Data de compra', 
+IIF(ISNULL([Data Liquidacao]) = False, Replace([Data Liquidacao], '/', '.'),'') AS 'Data de Liquidacao', 
+[Asset ID] AS 'Asset ID',
+IIF(ISNULL([Valor de face]) = False, Format([Valor de face], '#,##0.00'),'') AS 'Valor de face', 
+IIF(ISNULL([Preco]) = False, Format([Preco], '#,##0.00'),'') AS 'Preco', 
+IIF(ISNULL([Parceiro]) = False, Ucase([Parceiro]),'') AS 'Parceiro', 
+IIF(ISNULL([Juros acruados]) = False, Format([Juros acruados], '#,##0.00'),'') AS 'Juros acruados', 
+IIF(ISNULL([Agio Desagio]) = False, Format([Agio Desagio], '#,##0.00'),'') AS 'Agio Desagio', 
+IIF(ISNULL([Deposito]) = False, [Deposito], '') AS 'Deposito', 
+[SAP RECOMPRA], [STATUS]
+FROM [$vListaAbas[0]$$$] 
+WHERE LEN([Asset ID]) > 0 
+

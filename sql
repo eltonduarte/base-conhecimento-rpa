@@ -6,11 +6,14 @@ Provider=Microsoft.ACE.OLEDB.12.0;Data Source=$variavel$;Extended Properties="Ex
 
 
 
--- Exemplos de updates
+## Exemplos de updates
 Update [Base$$] Set [Status] = '$oStrStatus$', 
 [Mensagem_SGTP] = '$oStrMensagemSgtp$',
 [Data_Processamento_SGTP] = '$vStrDataExec$'
 Where [Imobilizado] = '$vRcdImob{Imobilizado}$'
+
+  
+UPDATE [Entradas$$] SET [STATUS] = 'Transferido' WHERE [CENTRO] LIKE '$vLinhaCentros{CENTRO}$'
 
   
 
@@ -53,3 +56,5 @@ WHERE LEN([Asset ID]) > 0
 
 SELECT `Materiais Óleo` FROM [Parâmetros$$] WHERE [Materiais Óleo] IS NOT NULL or [Materiais Óleo] <> ""
 
+SELECT DISTINCT CENTRO FROM [Entradas$$] WHERE len([CENTRO]) > 0 
+SELECT * FROM [Entradas$$] WHERE [CENTRO] LIKE '$vLinhaCentros{CENTRO}$'

@@ -1,9 +1,10 @@
--- Connection string para planilhas, Connection mode: Default
+## Connection string para planilhas, Connection mode: Default
 Provider=Microsoft.ACE.OLEDB.12.0;Data Source=$iStrCaminhoBase$;Extended Properties="Excel 12.0 Xml;HDR=YES;IMEX=1";
 
--- com IMEX=0, a planilha aceita updates
+## com IMEX=0, a planilha aceita updates
 Provider=Microsoft.ACE.OLEDB.12.0;Data Source=$variavel$;Extended Properties="Excel 12.0 Xml;HDR=YES;IMEX=0";
 
+## Para selects com indice da coluna (F1, F2) e por range de celulas.
 
 
 ## Exemplos de updates

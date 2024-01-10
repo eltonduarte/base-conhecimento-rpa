@@ -5,7 +5,13 @@ Provider=Microsoft.ACE.OLEDB.12.0;Data Source=$iStrCaminhoBase$;Extended Propert
 Provider=Microsoft.ACE.OLEDB.12.0;Data Source=$variavel$;Extended Properties="Excel 12.0 Xml;HDR=YES;IMEX=0";
 
 ## Para selects com indice da coluna (F1, F2) e por range de celulas.
+Provider=Microsoft.ACE.OLEDB.12.0;Data Source=$iStrPlanilha$;Extended Properties="Excel 12.0 Xml;HDR=NO;IMEX=1";
 
+# Exemplo
+SELECT DISTINCT F1 AS Fornecedor, F2 AS Empresa
+FROM [Exportação SAPUI5$$A2:K] 
+WHERE ISNULL(F1) = False
+  
 
 ## Exemplos de updates
 Update [Base$$] Set [Status] = '$oStrStatus$', 

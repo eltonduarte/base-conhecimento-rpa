@@ -1,0 +1,97 @@
+
+###
+# @name Listar chamados novos (retorna apenas o sys_id)
+# (OK)
+GET {{SERVICE_NOW_URL_BASE}}/api/now/table/sn_hr_core_case_talent_management?
+    sysparm_query=assignment_group%3D6256f43f1b5cb1103c566538fa4bcb49
+    %5Ehr_service%3D468b11aa1be22d543fb443bbe54bcb5a
+    %5EapprovalINapproved,not%20requested
+    %5Estate%3D13
+    %5Eassigned_toISEMPTY
+    %5EORDERBYsys_updated_on
+    &sysparm_display_value=false
+    &sysparm_fields=sys_id,number
+    &sysparm_exclude_reference_link=true
+    &sysparm_limit=100&sysparm_offset=0
+Accept: application/json
+Authorization: Basic {{SNOW_RPA_USERNAME}} {{SNOW_RPA_PASSWORD}}
+
+> Set_SysID_Corrente.js
+
+###
+# @name Assume o chamado
+# (OK)
+# sys_id do chamado 0d71a4121bf8351070a6da45fa4bcb6c
+PUT {{SERVICE_NOW_URL_BASE}}/api/now/table/sn_hr_core_case_talent_management/{{SYS_ID_CORRENTE}}
+    ?sysparm_fields=sys_id,number,assigned_to,state
+Accept: application/json
+Authorization: Basic {{SNOW_RPA_USERNAME}} {{SNOW_RPA_PASSWORD}}
+Content-Type: application/json
+
+{
+  "comments": "Em atendimento automatizado",
+  "assigned_to": "{{RPA_USER_SYSID}}",
+  "state": "18"
+}
+
+###
+# @name Iniciar o Trabalho
+# (NOK)
+# sys_id do chamado 0d71a4121bf8351070a6da45fa4bcb6c
+PUT {{SERVICE_NOW_URL_BASE}}/api/now/table/sn_hr_core_case_talent_management/{{SYS_ID_CORRENTE}}
+    ?sysparm_fields=sys_id,number,assigned_to,state,hr_service
+Accept: application/json
+Authorization: Basic {{SNOW_RPA_USERNAME}} {{SNOW_RPA_PASSWORD}}
+Content-Type: application/json
+
+{
+  "comments": "Iniciando o trabalho",
+  "state": "18"
+}
+
+###
+# @name Consulta pelo sysid
+# (OK)
+#     ?sysparm_fields=sys_id,number,state,assigned_to.name,assigned_to.email,hr_service
+GET {{SERVICE_NOW_URL_BASE}}/api/now/table/sn_hr_core_case_talent_management/{{SYS_ID_CORRENTE}}
+Accept: application/json
+Authorization: Basic {{SNOW_RPA_USERNAME}} {{SNOW_RPA_PASSWORD}}
+
+
+###
+# Consulta pelo número
+# (OK)
+GET {{SERVICE_NOW_URL_BASE}}/api/now/table/sn_hr_core_case_talent_management?
+    sysparm_query=number%3DHRC0154072
+Accept: application/json
+Authorization: Basic {{SNOW_RPA_USERNAME}} {{SNOW_RPA_PASSWORD}}
+
+
+###
+# @name Consulta dados da Oferta (Servico pelo sys_id / não é o chamado)
+#
+GET https://petrobrasstag.service-now.com/api/now/table/sn_hr_core_service/468b11aa1be22d543fb443bbe54bcb5a
+Accept: application/json
+Authorization: Basic {{SNOW_RPA_USERNAME}} {{SNOW_RPA_PASSWORD}}
+
+###
+# @name Consultar os anexos do chamado
+# @no-log
+GET {{SERVICE_NOW_URL_BASE}}/api/now/attachment
+    ?table_name=sn_hr_core_case_talent_management
+    &table_sys_id=b139a8561b383510319298e13a4bcb1a
+Accept: application/json
+Authorization: Basic {{SNOW_RPA_USERNAME}} {{SNOW_RPA_PASSWORD}}
+
+###
+# @name anexar arquivo no chamado
+# @no-log
+POST {{SERVICE_NOW_URL_BASE}}/api/now/attachment/file?file_name=teste_anexo.pdf
+    &table_name=sn_hr_core_case_talent_management
+    &table_sys_id=b139a8561b383510319298e13a4bcb1a
+Accept: application/json
+Authorization: Basic {{SNOW_RPA_USERNAME}} {{SNOW_RPA_PASSWORD}}
+Content-Type: application/pdf
+
+< C:\trab\git\RPA-CORPORATIVO\CSP-ServiceNow\fontes\src\test\resources\anexo.pdf
+

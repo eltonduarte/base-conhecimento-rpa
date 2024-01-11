@@ -1,30 +1,20 @@
-## Connection string para planilhas, Connection mode: Default
+-- STRING DE CONEXÃO PLANILHAS
+
+-- Connection string para planilhas, Connection mode: Default
 Provider=Microsoft.ACE.OLEDB.12.0;Data Source=$iStrCaminhoBase$;Extended Properties="Excel 12.0 Xml;HDR=YES;IMEX=1";
 
-## com IMEX=0, a planilha aceita updates
+-- Com IMEX=0, a planilha aceita updates
 Provider=Microsoft.ACE.OLEDB.12.0;Data Source=$variavel$;Extended Properties="Excel 12.0 Xml;HDR=YES;IMEX=0";
 
-## Para selects com indice da coluna (F1, F2) e por range de celulas.
+-- Para selects com indice da coluna (F1, F2) e por range de celulas.
 Provider=Microsoft.ACE.OLEDB.12.0;Data Source=$iStrPlanilha$;Extended Properties="Excel 12.0 Xml;HDR=NO;IMEX=1";
 
-# Exemplo
+
+-- SELECT
+
 SELECT DISTINCT F1 AS Fornecedor, F2 AS Empresa
 FROM [Exportação SAPUI5$$A2:K] 
 WHERE ISNULL(F1) = False
-  
-
-## Exemplos de updates
-Update [Base$$] Set [Status] = '$oStrStatus$', 
-[Mensagem_SGTP] = '$oStrMensagemSgtp$',
-[Data_Processamento_SGTP] = '$vStrDataExec$'
-Where [Imobilizado] = '$vRcdImob{Imobilizado}$'
-
-  
-UPDATE [Entradas$$] SET [STATUS] = 'Transferido' WHERE [CENTRO] LIKE '$vLinhaCentros{CENTRO}$'
-
-  
-
--- CONSULTAS
 
 Select [SST], Replace([Data], '.', '/') As Data, [Usuário]
 From [Sheet1$$] 
@@ -58,5 +48,26 @@ WHERE LEN([Asset ID]) > 0
 SELECT `Materiais Óleo` FROM [Parâmetros$$] WHERE [Materiais Óleo] IS NOT NULL or [Materiais Óleo] <> ""
 
 SELECT DISTINCT CENTRO FROM [Entradas$$] WHERE len([CENTRO]) > 0 
+
+
+-- UPDATE
   
-SELECT * FROM [Entradas$$] WHERE [CENTRO] LIKE '$vLinhaCentros{CENTRO}$'
+Update [Base$$] Set [Status] = '$oStrStatus$', 
+[Mensagem_SGTP] = '$oStrMensagemSgtp$',
+[Data_Processamento_SGTP] = '$vStrDataExec$'
+Where [Imobilizado] = '$vRcdImob{Imobilizado}$'
+
+  
+UPDATE [Entradas$$] 
+SET [STATUS] = 'Transferido' 
+WHERE [CENTRO] LIKE '$vLinhaCentros{CENTRO}$'
+  
+
+-- INSERT
+
+Insert Into [Consolidado_ECOMEX$$] (SST, DATA, USUARIO, ARQUIVO, ID) Values(
+'$vArrayConsulta{SST}$', 
+'$vArrayConsulta{"Data"}$', 
+'$vArrayConsulta{"Usuário"}$', 
+'$vStrArquivo$.xlsx',
+'$vNumId.Number:toString$')

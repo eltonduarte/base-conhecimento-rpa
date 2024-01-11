@@ -24,27 +24,22 @@ UPDATE [Entradas$$] SET [STATUS] = 'Transferido' WHERE [CENTRO] LIKE '$vLinhaCen
 
   
 
--- Exemplos de consultas válidas
+-- CONSULTAS
 
-SELECT Distinct [Imobilizado], [Pasta_Controle_Imobiliario] AS Codigo 
-FROM [Base$$] 
-WHERE LEN([Imobilizado]) > 0 AND LEN([Pasta_Controle_Imobiliario]) = 6
+Select [SST], Replace([Data], '.', '/') As Data, [Usuário]
+From [Sheet1$$] 
+Where Len([SST]) > 0
 
-
-Select * 
-From [Base$$]
-Where [Imobilizado] Like '$iStrImobilizado$' and [Status] IN('Pendente', 'Falha') 
-
-
-Select 
-[Asset ID]
-From [$vListaAbas[1]$$$] 
-Where
-Len([Asset ID]) > 0
+SELECT Distinct [Imobilizado], [Pasta_Controle_Imobiliario] AS Codigo FROM [Base$$] WHERE LEN([Imobilizado]) > 0 AND LEN([Pasta_Controle_Imobiliario]) = 6
+  
+Select * From [Base$$] Where [Imobilizado] Like '$iStrImobilizado$' and [Status] IN('Pendente', 'Falha') 
+  
+Select * From [$iStrNomeAba$$$] Where IsNull([Usuário]) = False
+  
+Select [Asset ID] From [$vListaAbas[1]$$$] Where Len([Asset ID]) > 0
 
 Select Top 1 * From [$vListaAbas[3]$$$]
-  
-# FIN_BND_01
+
 SELECT
 IIF(ISNUll([Data de pagamento]) = False, Replace([Data de pagamento], '/', '.'),'') AS 'Data de pagamento', 
 IIF(ISNULL([Data de compra]) = False, Replace([Data de compra], '/', '.'),'') AS 'Data de compra', 
@@ -60,8 +55,8 @@ IIF(ISNULL([Deposito]) = False, [Deposito], '') AS 'Deposito',
 FROM [$vListaAbas[0]$$$] 
 WHERE LEN([Asset ID]) > 0 
 
-
 SELECT `Materiais Óleo` FROM [Parâmetros$$] WHERE [Materiais Óleo] IS NOT NULL or [Materiais Óleo] <> ""
 
 SELECT DISTINCT CENTRO FROM [Entradas$$] WHERE len([CENTRO]) > 0 
+  
 SELECT * FROM [Entradas$$] WHERE [CENTRO] LIKE '$vLinhaCentros{CENTRO}$'

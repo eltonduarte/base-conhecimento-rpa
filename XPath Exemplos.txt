@@ -1,0 +1,81 @@
+//textarea[@aria-label='Comentários adicionais (visível ao cliente)' and @required='required']
+//button[@aria-label = "Salvar e Fechar" and @id = "quickCreateSaveAndCloseBtn_1"]
+
+
+Predicados:
+
+/bookstore/book[1]
+/bookstore/book[last()]
+/bookstore/book[position()=2]
+
+
+//author[text() = 'JK. Rowling']
+//title[@lang]
+//title[@lang='en']
+
+//title[@*] Seleciona todos os nós 'title' que possuam pelo menos um atributo
+
+
+
+Funções (utilizadas dentro do predicado)
+
+//elementoDesejado[nomeFunção() = 'valor']
+//span[text() = 'Conheço nossas soluções']
+//title[text() = 'Every Italian']
+//title[contains(text(), 'Potter')]
+//book[contains(@cover, 'paper')]
+//year[not(contains(text(), '2005'))]
+
+
+Axes (Eixos)
+
+//elementoÂncora[predicado]//nomeEixo::elementoBuscado
+//author[text() = 'Erik']//ancestor::book
+
+ancestor   => seleciona todos os ancestrais do nó atual
+//author[text() = "Giada De Laurentis"]//ancestor::book
+
+attribute  => seleciona elemento book que contenha a propriedade cooking
+//book[@category = 'children']
+
+child	   =>	seleciona todos os filhos do nó atual
+//book[@category = 'web'][1]//child::autor		
+
+descendant => seleciona todos os descenedntes do nó atual
+/bookstore//descendant::auhtor[text() = "Erik"]
+
+following => seleciona todos os nós author após abaixo do nó atual
+//title[text() = "Harry Potter"]//following::title
+
+following-sibling => seleciona todos os nós book abaixo do nó atual que perternçam ao mesmo nó pai
+//book[@category = 'web'][1]//following-sibling::author
+
+parent => Seleciona o pai do nó atual
+//author[text() = 'Erik']//parent::book
+
+preceding: seleciona todos os nós title acima do nó atual
+//title[text() = 'XQuery Kick Start']//preceding::title
+
+preceding-sibling: seleciona todos os nós author acima do nó atual que pertençam ao mesmo nó pai
+//author[text() = 'James Linn']//preceding-sibling::author
+
+
+4. Operadores Lógicos
+
+Sintaxe: //elementoAncora[predicado_1 operador predicado_2]
+
+Exemplos: 
+
+//book[@category='web'and @cover='paperback']
+//author[text()='Per Bothner' or text()='James Liin']//parent::book
+
+5. Exemplo no RPA Challenge
+
+//input[@ng-reflect-name='labelEmail']
+//label[text() = 'Email']//following-sibling::input
+//label[contains(text(), 'Email')]
+//label[text() = 'Email' or text() = 'E-mail']
+
+
+//label[text() = 'Usuário']//following::input[@id='UserName']
+
